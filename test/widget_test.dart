@@ -68,7 +68,7 @@ class MockDataPageBloc extends MockBloc<DataPageBlocEvent, DataPageBlocAction> i
   }
 }
 
-@GenerateMocks([http.Client, ServiceRepository])
+@GenerateMocks([http.Client])
 void main() {
   late MockBuildContext _mockContext;
   late MockServiceRepository _mockServiceRepository;
@@ -87,14 +87,14 @@ void main() {
       'changeFilterName',
       build: () => _mockDataPageBloc,
       act: (bloc) => bloc.add(DataPageBlocEvent(DataPageBlocEventType.changeFilterName,"")),
-      expect: () => [isA<DataPageBlocAction>()],
+      expect: () => [isA<DataPageBlocAction>(),isA<DataPageBlocAction>()],
   );
 
   blocTest<DataPageBloc, DataPageBlocAction>(
       'continueEvent',
       build: () => _mockDataPageBloc,
       act: (bloc) => bloc.add(DataPageBlocEvent(DataPageBlocEventType.continueEvent,{})),
-      expect: () => [isA<DataPageBlocAction>()],
+      expect: () => [isA<DataPageBlocAction>(),isA<DataPageBlocAction>(),isA<DataPageBlocAction>()],
   );
 
   test("Test Service more data", () async {
@@ -110,7 +110,7 @@ void main() {
   }
 
   test("Test Service more data 2", () async {
-    stubBaseRepositorySendRequestResponse("");
+    //stubBaseRepositorySendRequestResponse("");
     var result = await _mockServiceRepository.getNextCharacters("https://rickandmortyapi.com/api/character");
     expect(result.results.length, 1);
   });
