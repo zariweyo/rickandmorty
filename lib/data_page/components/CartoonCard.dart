@@ -21,6 +21,7 @@ class CartoonCard extends StatelessWidget {
     return Container(
       width: 363,
       height: 200,
+      margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(RADIUS)),
         border: Border.all(width: 1, color: const Color(0xffB9B9B9))

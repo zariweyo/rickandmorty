@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zwymobile.rickandmorty.rickandmorty">
+
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="rickandmorty"
         android:name="${applicationName}"

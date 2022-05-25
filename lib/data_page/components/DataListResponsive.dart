@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import 'package:rickandmorty/data_page/controllers/DataPageBloc.dart';
 import 'package:rickandmorty/shared/models/DataModel.dart';
 
@@ -62,17 +62,17 @@ class _DataListResponsiveState extends State<DataListResponsive> {
       );
     }
 
-    return ResponsiveGridList(
-        horizontalGridSpacing: 16,
-        horizontalGridMargin: 50,
-        verticalGridMargin: 50, 
-        minItemWidth: 360, 
-        minItemsPerRow: 1, 
-        maxItemsPerRow: 5, 
-        shrinkWrap: true, 
+    return ResponsiveGridRow(
         children: characters.map(
-          (character) => CartoonCard(
+          (character) => 
+          ResponsiveGridCol(
+              xs: 12,
+              md: 6,
+              lg: 4,
+              xl: 3,
+              child:CartoonCard(
             character: character,
+          )
           )
         ).toList(), // The list of widgets in the list
     );
