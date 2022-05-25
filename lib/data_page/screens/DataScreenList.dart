@@ -29,7 +29,7 @@ class DataScreenList extends StatelessWidget {
       child: ListView(
         controller: _controller,
         children:[
-          const DataHeaderSearch(),
+          DataHeaderSearch( key: Key('DataHeaderSearch')),
           Center(
             child: Container(
               decoration: const BoxDecoration(

@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rickandmorty/data_page/controllers/DataPageBloc.dart';
 import 'package:rickandmorty/shared/models/PaginationModel.dart';
 import "../../shared/extensions/capitalize.dart";
 
@@ -9,7 +13,7 @@ class DataFilterTab extends StatefulWidget {
 
   DataFilterTab({
     Key? key,
-    required this.onChange
+    required this.onChange,
   }) : super(key: key);
 
   @override
@@ -20,6 +24,7 @@ class _DataFilterTabState extends State<DataFilterTab>
     with TickerProviderStateMixin {
   late TabController _tabController;
   PaginationFilterGender currentOption = PaginationFilterGender.all;
+  late StreamSubscription subscription;
 
   @override
   void initState() {
@@ -32,6 +37,19 @@ class _DataFilterTabState extends State<DataFilterTab>
         widget.onChange(selectedOption);
       }
     });
+
+    subscription = BlocProvider.of<DataPageBloc>(context).stream.listen((event) {
+      if(event.type == DataPageBlocActionType.initialFilter){
+        PaginationFilter currentFilter = event.data as PaginationFilter;
+        _tabController.index = PaginationFilterGender.values.indexWhere((element) => element.name == currentFilter.gender.name);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   @override

@@ -1,17 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:rickandmorty/data_page/controllers/DataPageBloc.dart';
 import 'package:rickandmorty/shared/components/index.dart';
+import 'package:rickandmorty/shared/models/PaginationModel.dart';
 
 import 'CartoonCard.dart';
 
-class SearchField extends StatelessWidget {
+class SearchField extends StatefulWidget {
   Function(String) onChanged;
 
   SearchField({
     Key? key,
     required this.onChanged
   }) : super(key: key);
+
+  @override
+  _SearchFieldStatus createState() => _SearchFieldStatus();
+
+}
+
+class _SearchFieldStatus extends State<SearchField> {
+  late StreamSubscription subscription;
+  TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    subscription = BlocProvider.of<DataPageBloc>(context).stream.listen((event) {
+      if(event.type == DataPageBlocActionType.initialFilter){
+        PaginationFilter currentFilter = event.data as PaginationFilter;
+        textEditingController.text = currentFilter.name;
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +58,8 @@ class SearchField extends StatelessWidget {
         border: Border.all(color: Colors.white)
       ),
       child: TextField(
-        onChanged: onChanged,
+        controller: textEditingController,
+        onChanged: widget.onChanged,
         decoration: const InputDecoration(
           icon: const Icon(Icons.search, color: Colors.white,),
           hintText: 'Buscar personaje...',
