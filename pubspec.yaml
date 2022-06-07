@@ -48,6 +48,7 @@ dev_dependencies:
     sdk: flutter
   mockito: any
   bloc_test: any
+  network_image_mock: ^2.0.1
   
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

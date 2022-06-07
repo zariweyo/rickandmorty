@@ -1,26 +1,23 @@
-import 'dart:convert';
-
 import 'package:localstorage/localstorage.dart';
-import 'package:rickandmorty/shared/models/PaginationModel.dart';
+import 'package:rickandmorty/shared/models/index.dart';
 
 class LocalRepository {
-
   static const String LOCAL_STORAGE_KEY = "local_storage_key";
   static const String FILTER_KEY = "local_filters";
 
   late LocalStorage _storage;
 
-  LocalRepository(){
+  LocalRepository() {
     _storage = LocalStorage(LOCAL_STORAGE_KEY);
   }
 
-  Future<bool> onReady(){
+  Future<bool> onReady() {
     return _storage.ready;
   }
 
-  PaginationFilter getFilter(){
+  PaginationFilter getFilter() {
     var dataFilter = _storage.getItem(FILTER_KEY);
-    if(dataFilter!=null){
+    if (dataFilter != null) {
       return PaginationFilter.fromJson(dataFilter);
     }
 
@@ -28,7 +25,6 @@ class LocalRepository {
   }
 
   Future<void> setFilter(PaginationFilter filter) async {
-    await _storage.setItem(FILTER_KEY,filter.toMap());
+    await _storage.setItem(FILTER_KEY, filter.toMap());
   }
-
 }

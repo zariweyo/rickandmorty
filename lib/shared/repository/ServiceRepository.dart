@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:rickandmorty/shared/models/DataModel.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/PaginationModel.dart';
+import 'package:rickandmorty/shared/models/index.dart';
 
 abstract class Repository<T> {
   Future<PaginationModel> getCharacters(PaginationFilter filter);
@@ -12,37 +11,37 @@ abstract class Repository<T> {
 
 class ServiceRepository extends Repository<Character> {
   static const String BASEURL = "https://rickandmortyapi.com/api";
+  final http.Client _clientHttp = GetIt.I.get<http.Client>();
 
   @override
   Future<PaginationModel> getCharacters(PaginationFilter filter) async {
     var uri = '$BASEURL/character?';
 
-    if(filter.name != ""){
+    if (filter.name != "") {
       uri += '&name=' + filter.name;
     }
-    
-    if(filter.status != PaginationFilterStatus.none){
+
+    if (filter.status != PaginationFilterStatus.none) {
       uri += '&status=' + filter.status.name;
     }
-    
-    if(filter.gender != PaginationFilterGender.all){
+
+    if (filter.gender != PaginationFilterGender.all) {
       uri += '&gender=' + filter.gender.name;
     }
-    
-    var response = await http.get(Uri.parse(uri));
-    if(response.body == ""){
+
+    var response = await _clientHttp.get(Uri.parse(uri));
+    if (response.body == "") {
       return PaginationModel();
     }
     return PaginationModel.fromJson(jsonDecode(response.body));
   }
 
   @override
-  Future<PaginationModel> getNextCharacters(String uri) async {    
-    var response = await http.get(Uri.parse(uri));
-    if(response.body == ""){
+  Future<PaginationModel> getNextCharacters(String uri) async {
+    var response = await _clientHttp.get(Uri.parse(uri));
+    if (response.body == "") {
       return PaginationModel();
     }
     return PaginationModel.fromJson(jsonDecode(response.body));
   }
-
 }
