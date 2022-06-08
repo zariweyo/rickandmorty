@@ -1,0 +1,13 @@
+{
+  "lastKnowLocation": "Última localización conocida",
+  "firstSeenIn": "Viscto por primera vez",
+  "welcomeToApp": "Bienvenido a Rick and Morty",
+  "welcomeToAppBody": "Esto es una aplicación demostración de Flutter con licencia código abierto.",
+  "continueToNext": "Continuar",
+  "searchCharacter": "Buscar personaje ...",
+  "paginationFilterGenderAll": "Todos",
+  "paginationFilterGenderFemale": "Mujer",
+  "paginationFilterGenderMale": "Hombre",
+  "paginationFilterGenderGenderless": "Sin género",
+  "paginationFilterGenderUnknown": "Desconocido"
+}

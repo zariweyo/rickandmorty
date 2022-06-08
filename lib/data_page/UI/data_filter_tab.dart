@@ -6,6 +6,7 @@ import 'package:rickandmorty/data_page/bloc_controller/index.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
 import 'package:rickandmorty/shared/extensions/capitalize.dart';
 import 'package:rickandmorty/shared/models/index.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DataFilterTab extends StatefulWidget {
   final Function(PaginationFilterGender) onChange;
@@ -55,6 +56,26 @@ class _DataFilterTabState extends State<DataFilterTab>
     super.dispose();
   }
 
+  String getName(PaginationFilterGender genderOption){
+    switch(genderOption){
+      case PaginationFilterGender.female:
+        return AppLocalizations.of(context)!.paginationFilterGenderFemale;
+
+      case PaginationFilterGender.male:
+        return AppLocalizations.of(context)!.paginationFilterGenderMale;
+
+      case PaginationFilterGender.genderless:
+        return AppLocalizations.of(context)!.paginationFilterGenderGenderless;
+
+      case PaginationFilterGender.unknown:
+        return AppLocalizations.of(context)!.paginationFilterGenderUnknown;
+
+      case PaginationFilterGender.all:
+      default:
+        return AppLocalizations.of(context)!.paginationFilterGenderAll;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,7 +87,7 @@ class _DataFilterTabState extends State<DataFilterTab>
           tabs: PaginationFilterGender.values
               .map(
                 (option) => Tab(
-                  icon: Text(option.name.capitalize()),
+                  icon: Text(getName(option).capitalize()),
                 ),
               )
               .toList(),

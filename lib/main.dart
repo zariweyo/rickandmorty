@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rickandmorty/home_page/home_page.dart';
 import 'package:rickandmorty/start_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ENV { prod, test }
 
@@ -23,6 +25,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('es', ''),
+      ],
       home: const HomePage(),
     );
   }

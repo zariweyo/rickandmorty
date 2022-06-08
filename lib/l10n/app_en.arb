@@ -1,0 +1,13 @@
+{
+    "lastKnowLocation": "Last known location",
+    "firstSeenIn": "First seen in",
+    "welcomeToApp": "Welcome to Rick and Morty",
+    "welcomeToAppBody": "This is a DEMO app made in Futter and it' has Open Source License",
+    "continueToNext": "Continue",
+    "searchCharacter": "Search character ...",
+    "paginationFilterGenderAll": "All",
+    "paginationFilterGenderFemale": "Female",
+    "paginationFilterGenderMale": "Male",
+    "paginationFilterGenderGenderless": "Genderless",
+    "paginationFilterGenderUnknown": "Unknown"
+}

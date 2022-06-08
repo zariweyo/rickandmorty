@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/shared/models/index.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'cartoon_card_text.dart';
 
@@ -49,10 +50,10 @@ class CartoonCard extends StatelessWidget {
                                   "${character.status} - ${character.species}",
                               value: character.name),
                           CartoonCardText(
-                              title: "Last known location",
+                              title: AppLocalizations.of(context)!.lastKnowLocation,
                               value: character.location.name),
                           CartoonCardText(
-                              title: "First seen in",
+                              title: AppLocalizations.of(context)!.firstSeenIn,
                               value: character.created.toString())
                         ])))
           ],

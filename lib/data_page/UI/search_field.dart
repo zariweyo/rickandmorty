@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickandmorty/data_page/bloc_controller/index.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchField extends StatefulWidget {
   final Function(String) onChanged;
@@ -50,13 +51,13 @@ class _SearchFieldStatus extends State<SearchField> {
       child: TextField(
         controller: textEditingController,
         onChanged: widget.onChanged,
-        decoration: const InputDecoration(
-          icon: Icon(
+        decoration: InputDecoration(
+          icon: const Icon(
             Icons.search,
             color: Colors.white,
           ),
-          hintText: 'Buscar personaje...',
-          hintStyle: TextStyle(color: Colors.white),
+          hintText: AppLocalizations.of(context)!.searchCharacter,
+          hintStyle: const TextStyle(color: Colors.white),
         ),
         style: const TextStyle(color: Colors.white),
       ),
