@@ -8,27 +8,27 @@ class PaginationFilter {
   PaginationFilterGender gender;
 
   PaginationFilter({
-    this.name = "",
+    this.name   = "",
     this.status = PaginationFilterStatus.none,
     this.gender = PaginationFilterGender.all,
   });
 
   factory PaginationFilter.fromJson(Map<String, dynamic> json) {
     return PaginationFilter(
-        name: json['name'] ?? "",
-        status: json["status"] != null
-            ? PaginationFilterStatus.values
-                .firstWhere((element) => element.name == json["status"])
-            : PaginationFilterStatus.none,
-        gender: json["gender"] != null
-            ? PaginationFilterGender.values
-                .firstWhere((element) => element.name == json["gender"])
-            : PaginationFilterGender.all);
+        name    : json['name'] ?? "",
+        status  : json["status"] != null
+                  ? PaginationFilterStatus.values
+                      .firstWhere((element) => element.name == json["status"])
+                  : PaginationFilterStatus.none,
+        gender  : json["gender"] != null
+                  ? PaginationFilterGender.values
+                      .firstWhere((element) => element.name == json["gender"])
+                  : PaginationFilterGender.all);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      "name": name,
+      "name"  : name,
       "status": status.name,
       "gender": gender.name,
     };

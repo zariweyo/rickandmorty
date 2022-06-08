@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data_page/DataPage.dart';
+import '../data_page/data_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

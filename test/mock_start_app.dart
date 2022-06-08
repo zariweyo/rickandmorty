@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:http/testing.dart';
 import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
-import 'MockServiceRepository.dart';
-import 'MockStaticData.dart';
+import 'mock_service_repository.dart';
+import 'mock_static_data.dart';
 
 class MockStartApp {
   static Future<http.Response> _requestHandler(http.Request request) async {

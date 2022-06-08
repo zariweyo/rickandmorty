@@ -13,8 +13,8 @@ class DataScreenHome extends StatelessWidget {
       child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Align(alignment: Alignment.center, child: SquadLogoGlobal()),
-            Align(alignment: Alignment.center, child: LogoGlobal()),
+            const Align(alignment: Alignment.center, child: SquadLogoGlobal()),
+            const Align(alignment: Alignment.center, child: LogoGlobal()),
             const Text(
               "Bienvenido a Rick and Morty",
               textAlign: TextAlign.center,

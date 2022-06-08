@@ -2,13 +2,13 @@ import 'package:localstorage/localstorage.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 
 class LocalRepository {
-  static const String LOCAL_STORAGE_KEY = "local_storage_key";
-  static const String FILTER_KEY = "local_filters";
+  static const String localStorageKey = "local_storage_key";
+  static const String filterKey        = "local_filters";
 
   late LocalStorage _storage;
 
   LocalRepository() {
-    _storage = LocalStorage(LOCAL_STORAGE_KEY);
+    _storage = LocalStorage(localStorageKey);
   }
 
   Future<bool> onReady() {
@@ -16,8 +16,9 @@ class LocalRepository {
   }
 
   PaginationFilter getFilter() {
-    var dataFilter = _storage.getItem(FILTER_KEY);
-    if (dataFilter != null) {
+    var dataFilter  =   _storage.getItem(filterKey);
+
+    if (dataFilter !=   null) {
       return PaginationFilter.fromJson(dataFilter);
     }
 
@@ -25,6 +26,6 @@ class LocalRepository {
   }
 
   Future<void> setFilter(PaginationFilter filter) async {
-    await _storage.setItem(FILTER_KEY, filter.toMap());
+    await _storage.setItem(filterKey, filter.toMap());
   }
 }

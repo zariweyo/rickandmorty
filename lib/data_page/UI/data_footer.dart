@@ -46,12 +46,11 @@ class _DataFooterState extends State<DataFooter> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
       child: Column(children: [
         loadingMore
-            ? Container(
-                child: const LinearProgressIndicator(
-                color: Color(0xff081F32),
-              ))
+            ? const LinearProgressIndicator(
+            color: Color(0xff081F32),
+              )
             : Container(),
-        Container(child: SquadLogoGlobal())
+        const SquadLogoGlobal()
       ]),
     );
   }

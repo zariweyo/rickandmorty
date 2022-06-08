@@ -8,9 +8,9 @@ import 'package:rickandmorty/shared/extensions/capitalize.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 
 class DataFilterTab extends StatefulWidget {
-  Function(PaginationFilterGender) onChange;
+  final Function(PaginationFilterGender) onChange;
 
-  DataFilterTab({
+  const DataFilterTab({
     Key? key,
     required this.onChange,
   }) : super(key: key);

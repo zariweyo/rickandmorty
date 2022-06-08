@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 
-import 'CartoonCardText.dart';
+import 'cartoon_card_text.dart';
 
 class CartoonCard extends StatelessWidget {
-  static const double RADIUS = 10;
+  static const double defRadius = 10;
   final Character character;
 
   const CartoonCard({Key? key, required this.character}) : super(key: key);
@@ -14,9 +14,9 @@ class CartoonCard extends StatelessWidget {
     return Container(
         width: 363,
         height: 200,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(RADIUS)),
+            borderRadius: const BorderRadius.all(Radius.circular(defRadius)),
             border: Border.all(width: 1, color: const Color(0xffB9B9B9))),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,9 +25,9 @@ class CartoonCard extends StatelessWidget {
               flex: 1,
               child: Container(
                   decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(RADIUS),
-                  bottomLeft: Radius.circular(RADIUS),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(defRadius),
+                  bottomLeft: Radius.circular(defRadius),
                 ),
                 image: DecorationImage(
                     image: Image.network(character.image).image,

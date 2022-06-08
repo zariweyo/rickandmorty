@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LogoGlobal extends StatelessWidget {
-  late double maxWidth;
+  final double maxWidth;
 
-  LogoGlobal({Key? key, this.maxWidth = 500}) : super(key: key);
+  const LogoGlobal({Key? key, this.maxWidth = 500}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

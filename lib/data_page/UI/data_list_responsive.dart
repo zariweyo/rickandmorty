@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:rickandmorty/data_page/bloc_controller/index.dart';
-import 'package:rickandmorty/shared/models/Character.dart';
+import 'package:rickandmorty/shared/models/character_model.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
 
-import 'CartoonCard.dart';
+import 'cartoon_card.dart';
 
 class DataListResponsive extends StatefulWidget {
   const DataListResponsive({Key? key}) : super(key: key);

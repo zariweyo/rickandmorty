@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SquadLogoGlobal extends StatelessWidget {
-  Function()? onTap;
 
-  SquadLogoGlobal({Key? key}) : super(key: key);
+  const SquadLogoGlobal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

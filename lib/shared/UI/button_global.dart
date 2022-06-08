@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ButtonGlobal extends StatelessWidget {
-  String text;
-  Function()? onTap;
+  final String text;
+  final Function()? onTap;
 
-  ButtonGlobal({
+  const ButtonGlobal({
     Key? key,
     required this.text,
     this.onTap,

@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/testing.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -21,7 +20,7 @@ import 'package:rickandmorty/shared/UI/index.dart';
 
 import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
-import 'MockStartApp.dart';
+import 'mock_start_app.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
@@ -32,7 +31,6 @@ void main() {
   late MockBuildContext _mockContext;
   late ServiceRepository _mockServiceRepository;
   late DataPageBloc _mockDataPageBloc;
-  late MockClient client;
 
   setUpAll(() {
     _mockContext = MockBuildContext();
@@ -72,7 +70,7 @@ void main() {
     testWidgets('Continue to home page', (WidgetTester tester) async {
       
       await tester.pumpWidget(const MyApp(
-        env: ENV.TEST
+        env: ENV.test
       ));
 
       expect(find.text("Bienvenido a Rick and Morty"), findsOneWidget);

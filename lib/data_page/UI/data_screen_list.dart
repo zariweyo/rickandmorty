@@ -4,11 +4,21 @@ import 'package:rickandmorty/data_page/UI/index.dart';
 import 'package:rickandmorty/data_page/bloc_controller/index.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
 
-class DataScreenList extends StatelessWidget {
-  late ScrollController _controller;
-  late BuildContext _context;
+class DataScreenList extends StatefulWidget {
+  
 
-  DataScreenList({Key? key}) : super(key: key) {
+  const DataScreenList({Key? key}) : super(key: key);
+
+  @override
+  State<DataScreenList> createState() => _DataScreenListState();
+}
+
+class _DataScreenListState extends State<DataScreenList> {
+  late BuildContext _context;
+  late ScrollController _controller;
+
+  @override
+  void initState() {
     _controller = ScrollController();
 
     _controller.addListener(() {
@@ -18,19 +28,19 @@ class DataScreenList extends StatelessWidget {
             DataPageBlocEventType.loadMoreCharacters, {}));
       }
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return Container(
-        child: ListView(controller: _controller, children: [
-      DataHeaderSearch(key: Key('DataHeaderSearch')),
+    return ListView(controller: _controller, children: [
+      const DataHeaderSearch(key: Key('DataHeaderSearch')),
       Center(
-          child: Container(
-              decoration: const BoxDecoration(color: Colors.white),
-              child: const DataListResponsive())),
+      child: Container(
+          decoration: const BoxDecoration(color: Colors.white),
+          child: const DataListResponsive())),
       const DataFooter()
-    ]));
+    ]);
   }
 }

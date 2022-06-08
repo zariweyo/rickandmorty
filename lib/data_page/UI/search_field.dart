@@ -7,9 +7,9 @@ import 'package:rickandmorty/shared/models/index.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
 
 class SearchField extends StatefulWidget {
-  Function(String) onChanged;
+  final Function(String) onChanged;
 
-  SearchField({Key? key, required this.onChanged}) : super(key: key);
+  const SearchField({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   _SearchFieldStatus createState() => _SearchFieldStatus();
@@ -45,13 +45,13 @@ class _SearchFieldStatus extends State<SearchField> {
       constraints: const BoxConstraints(minWidth: 300, maxWidth: 500),
       decoration: BoxDecoration(
           color: const Color(0xff081F32),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
           border: Border.all(color: Colors.white)),
       child: TextField(
         controller: textEditingController,
         onChanged: widget.onChanged,
         decoration: const InputDecoration(
-          icon: const Icon(
+          icon: Icon(
             Icons.search,
             color: Colors.white,
           ),

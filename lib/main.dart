@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rickandmorty/home_page/HomePage.dart';
-import 'package:rickandmorty/StartApp.dart';
+import 'package:rickandmorty/home_page/home_page.dart';
+import 'package:rickandmorty/start_app.dart';
 
-enum ENV { PROD, TEST }
+enum ENV { prod, test }
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +10,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final ENV env;
-  const MyApp({Key? key, this.env = ENV.PROD}) : super(key: key);
+  const MyApp({Key? key, this.env = ENV.prod}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (env == ENV.PROD) {
+    if (env == ENV.prod) {
       StartApp.registers(context);
     }
     return MaterialApp(

@@ -11,8 +11,8 @@ class DataPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<DataPageBloc>(
       create: (BuildContext _context) => DataPageBloc(
-          DataPageBlocAction<BuildContext>(
-              DataPageBlocActionType.initial, context)),
+          DataPageBlocAction<BuildContext>(DataPageBlocActionType.initial, context)
+      ),
       child: const DataScreen(),
     );
   }

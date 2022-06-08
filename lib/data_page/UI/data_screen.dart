@@ -42,7 +42,7 @@ class _DataScreenState extends State<DataScreen> {
 
   Widget body() {
     if (!showHome) {
-      return DataScreenList();
+      return const DataScreenList();
     }
 
     return const DataScreenHome(key: Key('DataScreenHome'));
