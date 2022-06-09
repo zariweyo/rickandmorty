@@ -14,17 +14,15 @@ import 'package:network_image_mock/network_image_mock.dart';
 import 'package:rickandmorty/data_page/bloc_controller/index.dart';
 import 'package:rickandmorty/data_page/models/index.dart';
 
-import 'package:rickandmorty/main.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:rickandmorty/shared/UI/index.dart';
 
 import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
+import 'mock_my_app.dart';
 import 'mock_start_app.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
-
-
 
 @GenerateMocks([http.Client])
 void main() {
@@ -69,19 +67,18 @@ void main() {
   group('UI Tests', () {
     testWidgets('Continue to home page', (WidgetTester tester) async {
       
-      await tester.pumpWidget(const MyApp(
-        env: ENV.test
-      ));
+      await tester.pumpWidget(const MockMyApp());
 
-      expect(find.text("Bienvenido a Rick and Morty"), findsOneWidget);
-      expect(find.text('All'), findsNothing);
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining("Welcome"), findsOneWidget);
+      expect(find.textContaining("All"), findsNothing);
 
       await tester.tap(find.byType(ButtonGlobal));
       await tester.pump();
 
-      // Verify that our counter has incremented.
-      expect(find.text("Bienvenido a Rick and Morty"), findsNothing);
-      expect(find.text('All'), findsOneWidget);
+      expect(find.textContaining("Welcome"), findsNothing);
+      expect(find.textContaining("All"), findsOneWidget);
       mockNetworkImagesFor(() async =>
         tester.pumpAndSettle()
       );
