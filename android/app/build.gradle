@@ -57,10 +57,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias "rickandmorty"
+            keyPassword "$System.env.KEY_PASSWORD"
+            storeFile file("../../keys/rickandmorty.keystore")
+            storePassword "$System.env.KEY_PASSWORD"
         }
     }
     
