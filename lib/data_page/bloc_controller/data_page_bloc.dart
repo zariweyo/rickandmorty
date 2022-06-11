@@ -37,11 +37,13 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
     switch (event.type) {
       case DataPageBlocEventType.continueEvent:
         emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.showLists, {}));
-        await callService();
         emit(DataPageBlocAction<PaginationFilter>(DataPageBlocActionType.initialFilter, filter));
-        emit(DataPageBlocAction<List<Character>>(DataPageBlocActionType.newCharacters, paginationResult.results));
         break;
 
+      case DataPageBlocEventType.firstLoadData:
+        await callService();
+        emit(DataPageBlocAction<List<Character>>(DataPageBlocActionType.newCharacters, paginationResult.results));
+        break;
       case DataPageBlocEventType.backToTitleEvent:
         emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.showHome, {}));
         break;
@@ -71,7 +73,7 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
         break;
 
       case DataPageBlocEventType.loadMoreCharacters:
-        if (paginationResult.info.next != "") {
+        if (paginationResult.info!.next != "") {
           emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.loagingMoreActionStart, {}));
           await callMore();
           emit(DataPageBlocAction<List<Character>>(DataPageBlocActionType.newMoreCharacters,paginationResult.results));
@@ -86,9 +88,9 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
   }
 
   callMore() async {
-    if (paginationResult.info.next != "") {
+    if (paginationResult.info!.next != "") {
       var _paginationResult =
-          await serviceRepository.getNextCharacters(paginationResult.info.next);
+          await serviceRepository.getNextCharacters(paginationResult.info!.next);
       paginationResult.info = _paginationResult.info;
       paginationResult.results = _paginationResult.results;
     }

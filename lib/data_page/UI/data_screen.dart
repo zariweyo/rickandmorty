@@ -29,6 +29,7 @@ class _DataScreenState extends State<DataScreen> {
         setState(() {
           showHome = false;
         });
+        
       }
     });
     super.initState();

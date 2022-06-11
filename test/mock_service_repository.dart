@@ -8,7 +8,7 @@ class MockServiceRepository implements ServiceRepository {
   Future<PaginationModel> getCharacters(PaginationFilter filter) async =>
     Future.delayed(const Duration(seconds: 2), () => 
       PaginationModel(
-        info: const PaginationModelInfo(),
+        info: PaginationModelInfo(),
         results: [...MockStaticData.mockCharacters()]
       ));
 
@@ -16,7 +16,7 @@ class MockServiceRepository implements ServiceRepository {
   Future<PaginationModel> getNextCharacters(String uri) =>
     Future.delayed(const Duration(seconds: 2), () => 
       PaginationModel(
-        info: const PaginationModelInfo(),
+        info: PaginationModelInfo(),
         results: [...MockStaticData.mockCharacters()]
       ));
 

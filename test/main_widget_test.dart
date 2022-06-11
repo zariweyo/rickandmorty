@@ -6,8 +6,10 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_test/hive_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -24,6 +26,7 @@ import 'mock_start_app.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
+
 @GenerateMocks([http.Client])
 void main() {
   late MockBuildContext _mockContext;
@@ -31,13 +34,29 @@ void main() {
   late DataPageBloc _mockDataPageBloc;
 
   setUpAll(() {
+    const channel = MethodChannel(
+      'plugins.flutter.io/path_provider_macos',
+    );
+    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+      return './test/fixtures/core';
+    });
+
+    const channel2 = MethodChannel(
+      'plugins.flutter.io/path_provider',
+    );
+    channel2.setMockMethodCallHandler((MethodCall methodCall) async {
+      return './test/fixtures/core';
+    });
+
     _mockContext = MockBuildContext();
     MockStartApp.registers(_mockContext);
     _mockServiceRepository = GetIt.I.get<ServiceRepository>();
   });
 
-  setUp((){
+  setUp(() async {
+    await setUpTestHive();
     _mockDataPageBloc = DataPageBloc(DataPageBlocAction<BuildContext>(DataPageBlocActionType.initial,_mockContext));
+
   });
 
 
@@ -53,7 +72,7 @@ void main() {
         'Test for continue event',
         build: () => _mockDataPageBloc,
         act: (bloc) => bloc.add(DataPageBlocEvent<dynamic>(DataPageBlocEventType.continueEvent,{})),
-        expect: () => [isA<DataPageBlocAction>()],
+        expect: () => [isA<DataPageBlocAction>(),isA<DataPageBlocAction>()],
     );
   });
 

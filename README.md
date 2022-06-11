@@ -11,3 +11,10 @@ The APP looks like this:
   <img src="./resources/showapp.gif">
 </p>
 
+## Use Hive
+This app saves cache for Http Requests with hive. Hive needs to be generated his code using this command:
+```
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+It create tha files XX.g.dart, which are the Adapters to use in the CacheRepository.
+

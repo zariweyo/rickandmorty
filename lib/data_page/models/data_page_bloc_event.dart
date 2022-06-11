@@ -1,4 +1,5 @@
 enum DataPageBlocEventType {
+  firstLoadData,
   continueEvent,
   backToTitleEvent,
   changeFilterName,

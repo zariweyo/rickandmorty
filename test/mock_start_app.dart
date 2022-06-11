@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/testing.dart';
+import 'package:rickandmorty/shared/repository/cache_repository.dart';
 import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
 import 'mock_service_repository.dart';
@@ -18,6 +19,7 @@ class MockStartApp {
   }
 
   static Future<void> registers(BuildContext context) async {
+    GetIt.I.registerSingleton<CacheRepository>(CacheRepository());
     GetIt.I.registerSingleton<http.Client>(MockClient(_requestHandler));
     GetIt.I.registerSingleton<ServiceRepository>(MockServiceRepository());
   }

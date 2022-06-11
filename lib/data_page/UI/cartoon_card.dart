@@ -51,7 +51,7 @@ class CartoonCard extends StatelessWidget {
                               value: character.name),
                           CartoonCardText(
                               title: AppLocalizations.of(context)!.lastKnowLocation,
-                              value: character.location.name),
+                              value: character.location!.name),
                           CartoonCardText(
                               title: AppLocalizations.of(context)!.firstSeenIn,
                               value: character.created.toString())

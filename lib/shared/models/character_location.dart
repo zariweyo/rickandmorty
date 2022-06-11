@@ -1,8 +1,19 @@
-class CharacterLocation {
-  final String name;
-  final String url;
+import 'package:hive/hive.dart';
 
-  const CharacterLocation({
+import '../repository/cache_repository.dart';
+
+part 'character_location.g.dart';
+
+@HiveType(typeId: CacheRepository.characterLocationTypeId)
+class CharacterLocation extends HiveObject {
+  
+  @HiveField(0)
+  final   String  name;
+
+  @HiveField(1)
+  final   String  url;
+
+  CharacterLocation({
     this.name = "", 
     this.url  = ""
   });

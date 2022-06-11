@@ -9,14 +9,23 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final ENV enviroment;
   const MyApp({Key? key, this.enviroment = ENV.prod}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    StartApp.registers(context, widget.enviroment);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    StartApp.registers(context, enviroment);
     
     return MaterialApp(
       title: 'Rick and Morty',

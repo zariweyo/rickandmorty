@@ -28,6 +28,8 @@ class _DataScreenListState extends State<DataScreenList> {
             DataPageBlocEventType.loadMoreCharacters, {}));
       }
     });
+    
+    BlocProvider.of<DataPageBloc>(context).add(DataPageBlocEvent<dynamic>(DataPageBlocEventType.firstLoadData, {}));
     super.initState();
   }
 
