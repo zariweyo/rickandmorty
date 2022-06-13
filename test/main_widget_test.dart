@@ -18,6 +18,7 @@ import 'package:rickandmorty/data_page/models/index.dart';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:rickandmorty/shared/UI/index.dart';
+import 'package:rickandmorty/shared/models/index.dart';
 
 import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
@@ -72,13 +73,13 @@ void main() {
         'Test for continue event',
         build: () => _mockDataPageBloc,
         act: (bloc) => bloc.add(DataPageBlocEvent<dynamic>(DataPageBlocEventType.continueEvent,{})),
-        expect: () => [isA<DataPageBlocAction>(),isA<DataPageBlocAction>()],
+        expect: () => [isA<DataPageBlocAction>()],
     );
   });
 
   group('Service Tests', () {
     test("Test Service more data 2", () async {
-      var result = await _mockServiceRepository.getNextCharacters("https://rickandmortyapi.com/api/character");
+      var result = await _mockServiceRepository.getCharacters(2, PaginationFilter());
       expect(result.results.length, 1);
     });
   });

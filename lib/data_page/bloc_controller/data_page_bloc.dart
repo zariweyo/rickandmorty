@@ -37,10 +37,11 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
     switch (event.type) {
       case DataPageBlocEventType.continueEvent:
         emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.showLists, {}));
-        emit(DataPageBlocAction<PaginationFilter>(DataPageBlocActionType.initialFilter, filter));
+        
         break;
 
       case DataPageBlocEventType.firstLoadData:
+        emit(DataPageBlocAction<PaginationFilter>(DataPageBlocActionType.initialFilter, filter));
         await callService();
         emit(DataPageBlocAction<List<Character>>(DataPageBlocActionType.newCharacters, paginationResult.results));
         break;
@@ -73,7 +74,7 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
         break;
 
       case DataPageBlocEventType.loadMoreCharacters:
-        if (paginationResult.info!.next != "") {
+        if (paginationResult.info!.next != null && paginationResult.info!.next! > 0) {
           emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.loagingMoreActionStart, {}));
           await callMore();
           emit(DataPageBlocAction<List<Character>>(DataPageBlocActionType.newMoreCharacters,paginationResult.results));
@@ -83,16 +84,14 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
   }
 
   callService() async {
-    var _paginationResult = await serviceRepository.getCharacters(filter);
+    var _paginationResult = await serviceRepository.getCharacters(0,filter);
     paginationResult = _paginationResult;
   }
 
   callMore() async {
-    if (paginationResult.info!.next != "") {
-      var _paginationResult =
-          await serviceRepository.getNextCharacters(paginationResult.info!.next);
-      paginationResult.info = _paginationResult.info;
-      paginationResult.results = _paginationResult.results;
-    }
+    var _paginationResult =
+          await serviceRepository.getCharacters(paginationResult.info!.next!,filter);
+    paginationResult.info = _paginationResult.info;
+    paginationResult.results = _paginationResult.results;
   }
 }

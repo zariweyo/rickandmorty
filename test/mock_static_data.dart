@@ -1,11 +1,12 @@
 import 'package:http/http.dart' as http;
+import 'package:rickandmorty/shared/models/episode_model.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 
 class MockStaticData {
   static mockCharacters() {
     return <Character>[
       Character(
-        id: 1,
+        id: "1",
         name: "MockName1",
         status: "Alive",
         species: "Human",
@@ -14,7 +15,10 @@ class MockStaticData {
         image: "https://example.com/image.png",
         origin: CharacterLocation(),
         location: CharacterLocation(),
-        episode: ["https://example.com/episode/1"],
+        episode: [Episode(
+          name: "MockEpisode",
+          airDate: DateTime.now()
+        )],
         url: "https://example.com/character/1",
         created: DateTime.now(),
       )

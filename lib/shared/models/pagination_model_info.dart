@@ -14,24 +14,24 @@ class PaginationModelInfo {
   final int       pages;
 
   @HiveField(2)
-  final String    next;
+  final int?       next;
 
   @HiveField(3)
-  final String    prev;
+  final int?       prev;
 
   PaginationModelInfo({
     this.count  = 0,
     this.pages  = 0,
-    this.next   = "",
-    this.prev   = "",
+    this.next   = 0,
+    this.prev   = 0,
   });
 
   factory PaginationModelInfo.fromJson(Map<String, dynamic> json) {
     return PaginationModelInfo(
       count : json["count"] ?? 0,
       pages : json["pages"] ?? 0,
-      next  : json["next"]  ?? "",
-      prev  : json["prev"]  ?? "",
+      next  : json["next"]  ?? 0,
+      prev  : json["prev"]  ?? 0,
     );
   }
 }

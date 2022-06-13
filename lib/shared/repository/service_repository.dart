@@ -1,67 +1,91 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:rickandmorty/shared/models/index.dart';
 import 'package:rickandmorty/shared/repository/cache_repository.dart';
+import 'package:graphql/client.dart';
 
 abstract class Repository<T> {
-  Future<PaginationModel> getCharacters     (PaginationFilter filter);
-  Future<PaginationModel> getNextCharacters (String           uri);
+  Future<PaginationModel> getCharacters     (int page, PaginationFilter filter);
 }
 
 class ServiceRepository extends Repository<Character> {
-  static const  String          baseUrl           = "https://rickandmortyapi.com/api";
-  final         http.Client     _clientHttp       = GetIt.I.get<http.Client>();
+  static const  String          baseUrl           = "https://rickandmortyapi.com/graphql";
   final         CacheRepository _cacheRepository  = GetIt.I.get<CacheRepository>();
+  late          GraphQLClient   _graphqlClient;
 
-  @override
-  Future<PaginationModel> getCharacters(PaginationFilter filter) async {
-    var uri = '$baseUrl/character?';
 
-    if (filter.name != "") {
-      uri += '&name=' + filter.name;
-    }
+  ServiceRepository(){
+    final HttpLink httpLink = HttpLink(
+      baseUrl,
+    );
 
-    if (filter.status != PaginationFilterStatus.none) {
-      uri += '&status=' + filter.status.name;
-    }
-
-    if (filter.gender != PaginationFilterGender.all) {
-      uri += '&gender=' + filter.gender.name;
-    }
-
-    PaginationModel? cachePaginationModel = _cacheRepository.getQueryCache(uri);
-    if(cachePaginationModel!=null){
-      return cachePaginationModel;
-    }
-
-    var response  =   await _clientHttp.get(Uri.parse(uri));
-    if (response.body == "") {
-      return PaginationModel();
-    }
-
-    PaginationModel result = PaginationModel.fromJson(jsonDecode(response.body));
-    _cacheRepository.saveQueryCache(uri, result);
-
-    return result;
+    _graphqlClient = GraphQLClient(
+      cache: GraphQLCache(), 
+      link: httpLink
+    );
   }
 
   @override
-  Future<PaginationModel> getNextCharacters(String uri) async {
-    PaginationModel? cachePaginationModel = _cacheRepository.getQueryCache(uri);
-    if(cachePaginationModel!=null){
-      return cachePaginationModel;
+  Future<PaginationModel> getCharacters(int page, PaginationFilter filter) async {
+
+    String cacheSavedKey = page.toString() + "|" + filter.name + "|" + filter.gender.name + "|" + filter.status.name;
+
+    PaginationModel? cachedPaginationModel = _cacheRepository.getQueryCache(cacheSavedKey);
+    if(cachedPaginationModel!=null){
+      return cachedPaginationModel;
     }
 
-    var response = await _clientHttp.get(Uri.parse(uri));
-    if (response.body == "") {
-      return PaginationModel();
-    }
+    String queryString = r'''
+      query PaginationModel($page: Int!, $name: String!, $status: String!, $gender: String!){
+        characters(page: $page, filter: { 
+          name: $name,
+          status: $status,
+          gender: $gender
+        }) {
+          info {
+            count,prev,next,pages
+          }
+          results {
+            id
+            name
+            status
+            species
+            type
+            gender
+            image
+            origin {
+              name
+            }
+            created
+            episode {
+              id,
+              air_date,
+              name,
+            }
+            location {
+              name
+            }
+          }
+        }
+      }
+    ''';
 
-    PaginationModel result = PaginationModel.fromJson(jsonDecode(response.body));
-    _cacheRepository.saveQueryCache(uri, result);
+    QueryResult<PaginationModel> dataResult = await _graphqlClient.query<PaginationModel>(QueryOptions(
+      document: gql(queryString),
+      variables: <String, dynamic>{
+        'gender': filter.gender != PaginationFilterGender.all? filter.gender.name : "",
+        'status': filter.status != PaginationFilterStatus.none? filter.status.name : "",
+        'name': filter.name,
+        'page': page,
+      },
+    ));
 
-    return result;
+    PaginationModel paginationModel = PaginationModel.fromJson(dataResult.data!['characters']);
+
+    
+    _cacheRepository.saveQueryCache(cacheSavedKey, paginationModel);
+
+    return paginationModel;
   }
+
 }
