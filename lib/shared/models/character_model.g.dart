@@ -17,7 +17,7 @@ class CharacterAdapter extends TypeAdapter<Character> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Character(
-      id: fields[0] as int,
+      id: fields[0] as String,
       name: fields[1] as String,
       status: fields[2] as String,
       species: fields[3] as String,
@@ -26,7 +26,7 @@ class CharacterAdapter extends TypeAdapter<Character> {
       image: fields[6] as String,
       origin: fields[9] as CharacterLocation?,
       location: fields[10] as CharacterLocation?,
-      episode: (fields[7] as List).cast<String>(),
+      episode: (fields[7] as List).cast<Episode>(),
       url: fields[8] as String,
       created: fields[11] as DateTime?,
     );

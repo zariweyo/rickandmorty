@@ -6,8 +6,9 @@ class CacheRepository {
         static const int characterLocationTypeId = 1;
         static const int paginationModelTypeId = 2;
         static const int paginationModelInfoTypeId = 3;
+        static const int episodeTypeId = 4;
 
-        final String boxName = "PaginationModelCacheBox";
+        final String boxName = "PaginationModelCacheBoxv3";
         late Box<PaginationModel> box;
 
         CacheRepository(){

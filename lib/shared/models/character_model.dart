@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:rickandmorty/shared/models/episode_model.dart';
 
 import '../repository/cache_repository.dart';
 import 'character_location.dart';
@@ -8,7 +9,7 @@ part 'character_model.g.dart';
 @HiveType(typeId: CacheRepository.characterTypeId)
 class Character extends HiveObject {
   @HiveField(0)
-  final       int                 id;
+  final       String              id;
 
   @HiveField(1)
   final       String              name;
@@ -29,7 +30,7 @@ class Character extends HiveObject {
   final       String              image;
 
   @HiveField(7)
-  final       List<String>        episode;
+  final       List<Episode>        episode;
 
   @HiveField(8)
   final       String              url;
@@ -44,7 +45,7 @@ class Character extends HiveObject {
   late       DateTime?            created;
 
   Character({
-    this.id       = 0,
+    this.id       = "",
     this.name     = "",
     this.status   = "",
     this.species  = "",
@@ -64,7 +65,7 @@ class Character extends HiveObject {
 
   factory Character.fromJson(Map<String, dynamic> json) {
     return Character(
-        id        : json["id"]        ?? 0,
+        id        : json["id"]        ?? "",
         name      : json["name"]      ?? "",
         status    : json["status"]    ?? "",
         species   : json["species"]   ?? "",
@@ -79,7 +80,7 @@ class Character extends HiveObject {
         image     : json["image"] ?? "",
         episode   : json["episode"] != null
                     ? (json["episode"] as List)
-                        .map((element) => element as String)
+                        .map((element) => Episode.fromJson(element))
                         .toList()
                     : [],
         url       : json["url"] ?? "",

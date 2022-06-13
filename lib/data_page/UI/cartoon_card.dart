@@ -54,7 +54,7 @@ class CartoonCard extends StatelessWidget {
                               value: character.location!.name),
                           CartoonCardText(
                               title: AppLocalizations.of(context)!.firstSeenIn,
-                              value: character.created.toString())
+                              value: character.episode.first.airDate!.toIso8601String().split("T")[0] + " " + character.episode.first.name.toString())
                         ])))
           ],
         ));

@@ -1,41 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pagination_model_info.dart';
+part of 'episode_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PaginationModelInfoAdapter extends TypeAdapter<PaginationModelInfo> {
+class EpisodeAdapter extends TypeAdapter<Episode> {
   @override
-  final int typeId = 3;
+  final int typeId = 4;
 
   @override
-  PaginationModelInfo read(BinaryReader reader) {
+  Episode read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return PaginationModelInfo(
-      count: fields[0] as int,
-      pages: fields[1] as int,
-      next: fields[2] as int?,
-      prev: fields[3] as int?,
+    return Episode(
+      id: fields[0] as String,
+      name: fields[1] as String,
+      airDate: fields[2] as DateTime?,
+      episode: fields[3] as String,
+      characters: (fields[4] as List).cast<Character>(),
+      created: fields[5] as DateTime?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, PaginationModelInfo obj) {
+  void write(BinaryWriter writer, Episode obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.count)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.pages)
+      ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.next)
+      ..write(obj.airDate)
       ..writeByte(3)
-      ..write(obj.prev);
+      ..write(obj.episode)
+      ..writeByte(4)
+      ..write(obj.characters)
+      ..writeByte(5)
+      ..write(obj.created);
   }
 
   @override
@@ -44,7 +50,7 @@ class PaginationModelInfoAdapter extends TypeAdapter<PaginationModelInfo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PaginationModelInfoAdapter &&
+      other is EpisodeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
