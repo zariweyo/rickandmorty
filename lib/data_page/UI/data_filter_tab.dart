@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickandmorty/data_page/bloc_controller/index.dart';
@@ -24,7 +22,6 @@ class _DataFilterTabState extends State<DataFilterTab>
     with TickerProviderStateMixin {
   late TabController _tabController;
   PaginationFilterGender currentOption = PaginationFilterGender.all;
-  late StreamSubscription subscription;
 
   @override
   void initState() {
@@ -39,21 +36,14 @@ class _DataFilterTabState extends State<DataFilterTab>
         widget.onChange(selectedOption);
       }
     });
-
-    subscription =
-        BlocProvider.of<DataPageBloc>(context).stream.listen((event) {
-      if (event.type == DataPageBlocActionType.initialFilter) {
-        PaginationFilter currentFilter = event.data as PaginationFilter;
-        _tabController.index = PaginationFilterGender.values
-            .indexWhere((element) => element.name == currentFilter.gender.name);
-      }
-    });
   }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
+  blocListener(BuildContext blocContext, DataPageBlocAction action){
+    if (action.type == DataPageBlocActionType.initialFilter) {
+        PaginationFilter currentFilter = action.data as PaginationFilter;
+        _tabController.index = PaginationFilterGender.values
+            .indexWhere((element) => element.name == currentFilter.gender.name);
+    }
   }
 
   String getName(PaginationFilterGender genderOption){
@@ -78,7 +68,9 @@ class _DataFilterTabState extends State<DataFilterTab>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return BlocListener<DataPageBloc,DataPageBlocAction>(
+      listener: blocListener,
+      child:Container(
         padding: const EdgeInsets.only(bottom: 1),
         decoration: const BoxDecoration(color: Colors.black),
         child: TabBar(
@@ -91,6 +83,8 @@ class _DataFilterTabState extends State<DataFilterTab>
                 ),
               )
               .toList(),
-        ));
+        )
+      )
+    );
   }
 }

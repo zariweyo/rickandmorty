@@ -37,7 +37,6 @@ class DataPageBloc extends Bloc<DataPageBlocEvent, DataPageBlocAction> {
     switch (event.type) {
       case DataPageBlocEventType.continueEvent:
         emit(DataPageBlocAction<dynamic>(DataPageBlocActionType.showLists, {}));
-        
         break;
 
       case DataPageBlocEventType.firstLoadData:
