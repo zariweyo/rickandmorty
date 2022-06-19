@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickandmorty/data_page/UI/index.dart';
@@ -15,32 +13,6 @@ class DataScreen extends StatefulWidget {
 class _DataScreenState extends State<DataScreen> {
   bool showHome = true;
 
-  late StreamSubscription subscription;
-
-  @override
-  void initState() {
-    subscription =
-        BlocProvider.of<DataPageBloc>(context).stream.listen((event) {
-      if (event.type == DataPageBlocActionType.showHome) {
-        setState(() {
-          showHome = true;
-        });
-      } else if (event.type == DataPageBlocActionType.showLists) {
-        setState(() {
-          showHome = false;
-        });
-        
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
   Widget body() {
     if (!showHome) {
       return const DataScreenList();
@@ -49,8 +21,19 @@ class _DataScreenState extends State<DataScreen> {
     return const DataScreenHome(key: Key('DataScreenHome'));
   }
 
+  blocListener(BuildContext blocContext, DataPageBlocAction action){
+    if (action.type == DataPageBlocActionType.showHome) {
+        showHome = true;
+    } else if (action.type == DataPageBlocActionType.showLists) {
+        showHome = false;   
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return body();
+    return BlocConsumer<DataPageBloc,DataPageBlocAction>(
+      listener: blocListener,
+      builder: (blocContext,blocState) => body()
+    );
   }
 }

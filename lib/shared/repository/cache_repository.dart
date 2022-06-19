@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:rickandmorty/shared/models/episode_model.dart';
 import 'package:rickandmorty/shared/models/index.dart';
 
 class CacheRepository {
@@ -17,6 +18,7 @@ class CacheRepository {
                         Hive.registerAdapter(PaginationModelInfoAdapter());
                         Hive.registerAdapter(CharacterAdapter());
                         Hive.registerAdapter(CharacterLocationAdapter());
+                        Hive.registerAdapter(EpisodeAdapter());
                         
                         Hive.openBox<PaginationModel>(boxName).then((boxOppened){
                                 box = boxOppened;
