@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
               image: DecorationImage(
                   image: AssetImage("assets/images/home_back.png"),
                   fit: BoxFit.cover,
-                  opacity: 0.65),
+                  opacity: 0.60),
             ),
             child: const DataPage()),
       ),
