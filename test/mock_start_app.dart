@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/testing.dart';
-import 'package:rickandmorty/shared/repository/cache_repository.dart';
-import 'package:rickandmorty/shared/repository/index.dart';
+import 'package:rickandmorty/infrastructure/cache_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:rickandmorty/infrastructure/service_repository.dart';
 import 'mock_service_repository.dart';
 import 'mock_static_data.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rickandmorty/home_page/home_page.dart';
-import 'package:rickandmorty/shared/repository/index.dart';
+import 'package:rickandmorty/infrastructure/config_repository.dart';
+import 'package:rickandmorty/presentation/home/home_page.dart';
 import 'package:rickandmorty/start_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       title: 'Rick and Morty',
       theme: ThemeData(

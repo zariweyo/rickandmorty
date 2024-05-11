@@ -13,20 +13,20 @@ import 'package:hive_test/hive_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:rickandmorty/data_page/bloc_controller/index.dart';
-import 'package:rickandmorty/data_page/models/index.dart';
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:rickandmorty/shared/UI/index.dart';
-import 'package:rickandmorty/shared/models/index.dart';
 
-import 'package:rickandmorty/shared/repository/index.dart';
 import 'package:http/http.dart' as http;
+import 'package:rickandmorty/application/list/data_page_bloc.dart';
+import 'package:rickandmorty/application/list/data_page_bloc_action.dart';
+import 'package:rickandmorty/application/list/data_page_bloc_event.dart';
+import 'package:rickandmorty/domain/models/list/pagination_filter.dart';
+import 'package:rickandmorty/infrastructure/service_repository.dart';
+import 'package:rickandmorty/presentation/common/button_global.dart';
 import 'mock_my_app.dart';
 import 'mock_start_app.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
-
 
 @GenerateMocks([http.Client])
 void main() {
@@ -35,18 +35,12 @@ void main() {
   late DataPageBloc _mockDataPageBloc;
 
   setUpAll(() {
-    const channel = MethodChannel(
-      'plugins.flutter.io/path_provider_macos',
-    );
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return './test/fixtures/core';
-    });
-
-    const channel2 = MethodChannel(
-      'plugins.flutter.io/path_provider',
-    );
-    channel2.setMockMethodCallHandler((MethodCall methodCall) async {
-      return './test/fixtures/core';
+    // To mock getApplicationDocumentsDirectory
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+            const MethodChannel('plugins.flutter.io/path_provider'),
+            (MethodCall methodCall) async {
+      return 'documentDirectorymock/.';
     });
 
     _mockContext = MockBuildContext();
@@ -56,37 +50,38 @@ void main() {
 
   setUp(() async {
     await setUpTestHive();
-    _mockDataPageBloc = DataPageBloc(DataPageBlocAction<BuildContext>(DataPageBlocActionType.initial,_mockContext));
-
+    _mockDataPageBloc = DataPageBloc(DataPageBlocAction<BuildContext>(
+        DataPageBlocActionType.initial, _mockContext));
   });
-
 
   group('Bloc Tests', () {
     blocTest<DataPageBloc, DataPageBlocAction>(
-        'Test for change filter name',
-        build: () => _mockDataPageBloc,
-        act: (bloc) => bloc.add(DataPageBlocEvent<String>(DataPageBlocEventType.changeFilterName,"")),
-        expect: () => [isA<DataPageBlocAction>()],
+      'Test for change filter name',
+      build: () => _mockDataPageBloc,
+      act: (bloc) => bloc.add(DataPageBlocEvent<String>(
+          DataPageBlocEventType.changeFilterName, "")),
+      expect: () => [isA<DataPageBlocAction>()],
     );
 
     blocTest<DataPageBloc, DataPageBlocAction>(
-        'Test for continue event',
-        build: () => _mockDataPageBloc,
-        act: (bloc) => bloc.add(DataPageBlocEvent<dynamic>(DataPageBlocEventType.continueEvent,{})),
-        expect: () => [isA<DataPageBlocAction>()],
+      'Test for continue event',
+      build: () => _mockDataPageBloc,
+      act: (bloc) => bloc.add(
+          DataPageBlocEvent<dynamic>(DataPageBlocEventType.continueEvent, {})),
+      expect: () => [isA<DataPageBlocAction>()],
     );
   });
 
   group('Service Tests', () {
     test("Test Service more data 2", () async {
-      var result = await _mockServiceRepository.getCharacters(2, PaginationFilter());
+      var result =
+          await _mockServiceRepository.getCharacters(2, PaginationFilter());
       expect(result.results.length, 1);
     });
   });
 
   group('UI Tests', () {
     testWidgets('Continue to home page', (WidgetTester tester) async {
-      
       await tester.pumpWidget(const MockMyApp());
 
       await tester.pumpAndSettle();
@@ -99,9 +94,7 @@ void main() {
 
       expect(find.textContaining("Welcome"), findsNothing);
       expect(find.textContaining("All"), findsOneWidget);
-      mockNetworkImagesFor(() async =>
-        tester.pumpAndSettle()
-      );
+      mockNetworkImagesFor(() async => tester.pumpAndSettle());
     });
   });
 }
