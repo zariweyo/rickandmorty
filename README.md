@@ -11,6 +11,8 @@ This is a Demo APP developed in Flutter. It use:
 
 ## Demo APP
 
+https://zariweyo.github.io/rickandmorty/
+
 The APP looks like this:
 <p align="center">
   <img src="./resources/showapp.gif">
